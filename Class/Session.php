@@ -4,7 +4,7 @@ class Session
 {
     public function __construct()
     {
-        if (!empty($_SESSION['step']) && Session::get('finished') == 0) {
+        if (!empty($_SESSION['step'])) {
             return;
         }
 
@@ -36,6 +36,10 @@ class Session
                     ],
                 ],
             ],
+            3 => [
+                'index' => 3,
+                'message' => 'Qual prato você pensou?',
+            ],
         ];
     }
 
@@ -53,29 +57,27 @@ class Session
         return null;
     }
 
-    public static function setStepChanges(array $item, bool $answer)
+    public static function setItem(array $arr, $step = null)
     {
-        $session = self::get('step');
+        if ($step === null) {
+            $step = self::get('currentStep');
+        }
 
-        $current = $session[self::get('currentStep')];
-
-        $currentStr = json_encode($current, true);
-
-        $itemStr = json_encode($item, true);
-
-        $item['answer'] = $answer;
-
-        $finalItemStr = json_encode($item, true);
-
-        $finalCurrentStr = str_replace($itemStr, $finalItemStr, $currentStr);
-
-        $finalCurrent = json_decode($finalCurrentStr,true);
-
-        self::setNewStep($finalCurrent);
+        $_SESSION['step'][$step] = $arr;
     }
 
-    public static function setNewStep(array $arr)
+    public static function reset()
     {
-        $_SESSION['step'][self::get('currentStep')] = $arr;
+        $session = $_SESSION['step'][2];
+
+        $sessionStr = json_encode($session, true);
+
+        $sessionStr = str_replace('"answer":false','"answer":null', $sessionStr);
+
+        $sessionStr = str_replace('"answer":true','"answer":null', $sessionStr);
+
+        $sessionFinal = json_decode($sessionStr, true);
+
+        $_SESSION['step'][2] = $sessionFinal;
     }
 }
