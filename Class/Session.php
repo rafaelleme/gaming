@@ -31,6 +31,7 @@ class Session
                                 'parent' => 'massa',
                                 'name' => 'lasanha',
                                 'answer' => null,
+                                'categories' => []
                             ],
                         ],
                     ],

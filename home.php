@@ -1,10 +1,9 @@
 <?php
-
 $step = new Step();
 
-$current = $step->getCurrent();
+$current = $step->getCurrentStep();
 
-$currentItem = Session::get('currentItem');
+$currentItem = Step::getCurrentItem();
 
 $step::updateSession();
 ?>
@@ -48,7 +47,7 @@ $step::updateSession();
             <form method="post">
                 <div class="form-group first">
                     <label for="dish">Qual prato você pensou?</label>
-                    <input type="text" maxlength="200" class="form-control" id="dish" name="dish" placeholder="">
+                    <input type="text" maxlength="200" class="form-control" id="dish" name="dish" placeholder="" autocomplete="off">
                     <div class="d-flex justify-content-center mt-3 ">
                         <button type="button" class="btn btn-sm btn-primary mr-2 first-validate">
                             Ok
@@ -61,8 +60,8 @@ $step::updateSession();
 
 
                 <div class="form-group second">
-                    <label for="category"><span id="dish-text">VALORCAMPO</span> é __________ mas <?php echo $currentItem['name']; ?> não
-                    <input type="text" maxlength="200" class="form-control" id="category" name="category" placeholder="">
+                    <label for="category"><span id="dish-text">VALORCAMPO</span> é __________ mas <?php echo Step::getNameItem($currentItem); ?> não
+                    <input type="text" maxlength="200" class="form-control" id="category" name="category" placeholder="" autocomplete="off">
                     <div class="d-flex justify-content-center mt-3">
                         <button type="button" class="btn btn-sm btn-primary mr-2 second-validate">
                             Ok
